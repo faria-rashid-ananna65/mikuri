@@ -37,6 +37,7 @@ const page = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className='border border-purple-500 rounded p-3'
             />
+            <label className='text-sm text-center'> Want to create an account? <a href="/signup" className='text-blue-500 hover:underline'>Sign Up</a></label>
             <button type="submit" className='bg-pink-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
                Login
             </button>
