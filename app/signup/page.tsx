@@ -52,6 +52,9 @@ const login = () => {
             <button type="submit" className='bg-blue-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
                 Sign Up
             </button>
+            <button type="submit" className='bg-blue-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
+                Continue with Google
+            </button>
         </form>
     </div>
   )

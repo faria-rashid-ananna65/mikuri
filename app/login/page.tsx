@@ -20,8 +20,8 @@ const page = () => {
         };
   return (
      <div className='flex items-center justify-center bg-gray-300 min-h-screen'>
-            <form onSubmit={handleSubmit} className='bg-pink-300 p-6 border border-black rounded shadow-md text-black flex flex-col gap-4 w-1/3  max-w-[400px] mt-10'>
-                <h1 className='text-4xl font-bold text-center text-sky-500'>Login</h1>
+            <form onSubmit={handleSubmit} className='bg-blue-300 p-6 border border-black rounded shadow-md text-black flex flex-col gap-4 w-1/3  max-w-[400px] mt-10'>
+                <h1 className='text-4xl font-bold text-center text-pink-500'>Login</h1>
                 <p className='text-sm text-center'>Please enter your login credentials</p>
             <input
                 type="email"
@@ -37,8 +37,11 @@ const page = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className='border border-purple-500 rounded p-3'
             />
-            <button type="submit" className='bg-blue-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
+            <button type="submit" className='bg-pink-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
                Login
+            </button>
+            <button type="submit" className='bg-pink-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
+               Continue with Google
             </button>
         </form>
     </div>
