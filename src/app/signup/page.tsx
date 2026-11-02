@@ -1,6 +1,8 @@
 'use client'
 import React from 'react'
 import { useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
     interface User {
         name: string;
@@ -12,15 +14,17 @@ const login = () => {
     const [name, setName]= useState<string>('')
     const [email, setEmail]= useState<string>('')
     const [password, setPassword]= useState<string>('')
+    const route = useRouter()
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const user: User = {
-            name,
-            email,
-            password
-        };
-        console.log(user);
+        try{
+                const result = await axios.post('/api/auth/register',{
+                   name, email,password
+                })
+            }catch(err){
+                console.error('Error occurred while submitting the form:', err);
+            }
     };
 
     return (
@@ -32,24 +36,24 @@ const login = () => {
                     type="text"
                 placeholder="Your name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                 className='border border-purple-500 rounded p-3'
             />
             <input
                 type="email"
                 placeholder="your@domain.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 className='border border-purple-500 rounded p-3'
             />
             <input
                 type="password"
                 placeholder="Your password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 className='border border-purple-500 rounded p-3'
             />
-            <label className='text-sm text-center'>Already have an account? <a href="/login" className='text-blue-500 hover:underline'>Login</a></label>
+            <p className='text-sm text-center'>Already have an account? <a href="/login" className='text-blue-500 hover:underline'>Login</a></p>
             <button type="submit" className='bg-blue-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
                 Sign Up
             </button>

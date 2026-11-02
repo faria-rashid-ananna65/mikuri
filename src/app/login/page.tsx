@@ -1,4 +1,5 @@
 'use client'
+import { signIn } from 'next-auth/react';
 import React from 'react'
 import { useState } from 'react'
 
@@ -10,13 +11,16 @@ interface Login {
 const page = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+     const handleSubmit = async (e: React.FormEvent) => {
             e.preventDefault();
-            const user: Login = {
-                email,
-                password
-            };
-            console.log(user);
+            try{
+              const result =  await signIn('credentials', {
+                    email,
+                    password,
+                });
+            }catch(err){
+                console.error('Error occurred while submitting the form:', err);
+            }
         };
   return (
      <div className='flex items-center justify-center bg-gray-300 min-h-screen'>
@@ -27,14 +31,14 @@ const page = () => {
                 type="email"
                 placeholder="Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 className='border border-purple-500 rounded p-3'
             />
             <input
                 type="password"
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 className='border border-purple-500 rounded p-3'
             />
             <label className='text-sm text-center'> Want to create an account? <a href="/signup" className='text-blue-500 hover:underline'>Sign Up</a></label>
