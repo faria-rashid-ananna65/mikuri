@@ -1,5 +1,6 @@
 'use client'
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 import { useState } from 'react'
 
@@ -11,16 +12,28 @@ interface Login {
 const page = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-     const handleSubmit = async (e: React.FormEvent) => {
+    const route = useRouter()
+    const handleSubmit = async (e: React.FormEvent) => {
             e.preventDefault();
-            try{
-              const result =  await signIn('credentials', {
-                    email,
-                    password,
-                });
-            }catch(err){
-                console.error('Error occurred while submitting the form:', err);
-            }
+             try {
+        const result = await signIn('credentials', {
+            email,
+            password,
+            redirect: false,
+        });
+
+        if (result?.error) {
+            console.log("Login Error:", result.error);
+            return;
+        }
+
+        if (result?.ok) {
+            route.push("/");
+        }
+
+    } catch (err) {
+        console.error('Login Error:', err);
+    }
         };
   return (
      <div className='flex items-center justify-center bg-gray-300 min-h-screen'>
@@ -42,10 +55,12 @@ const page = () => {
                 className='border border-purple-500 rounded p-3'
             />
             <label className='text-sm text-center'> Want to create an account? <a href="/signup" className='text-blue-500 hover:underline'>Sign Up</a></label>
-            <button type="submit" className='bg-pink-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
+            <button type="button" className='bg-pink-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
                Login
             </button>
-            <button type="submit" className='bg-pink-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
+            <button type="button" className='bg-pink-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300' onClick={async()=>{ await signIn('google', {
+                callbackUrl:'/'
+            })    }}>
                Continue with Google
             </button>
         </form>

@@ -1,7 +1,12 @@
+'use client'
+
+
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import React from 'react'
+import Image from 'next/image'
 
 const page = () => {
+  const {data} = useSession()
   return (
     <>
         <nav className='w-full h-20 flex items-center justify-center bg-white shadow-md px-6'>
@@ -14,6 +19,12 @@ const page = () => {
             <Link href="/login" className=' w-1/3  border border-purple-400  bg-blue-400 px-4 py-2 text-sm  text-white rounded tracking-wide hover:bg-purple-600 '>LOGIN</Link>
             </div>
         </nav>
+        <div className='min-h-screen flex flex-col bg-black text-white px-4 item-center'>
+             {data && <div className='w-full border-2 border-white rounded-lg p-8 shadow-lg text-center relative flex flex-col item-center'>
+              {data.user.image && <div className='relative border-2 overflow-hidden border-white w-[200px] h-[200px] rounded-full'><Image src={data.user.image} fill alt='userImage'/></div>}
+              </div>}
+             {!data && <div className='text-white'>Loading...</div>}
+        </div>
     </>
   )
 }

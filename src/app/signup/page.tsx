@@ -3,7 +3,8 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-
+import Google from 'next-auth/providers/google'
+import { signIn } from 'next-auth/react'
     interface User {
         name: string;
         email: string;
@@ -22,6 +23,7 @@ const login = () => {
                 const result = await axios.post('/api/auth/register',{
                    name, email,password
                 })
+                route.push("/")
             }catch(err){
                 console.error('Error occurred while submitting the form:', err);
             }
@@ -57,7 +59,7 @@ const login = () => {
             <button type="submit" className='bg-blue-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
                 Sign Up
             </button>
-            <button type="submit" className='bg-blue-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300'>
+            <button type="button" className='bg-blue-500 text-white py-2 px-3 rounded hover:bg-purple-600 transition-colors duration-300' onClick={async()=>{await signIn('google',{callbackUrl:"/"}) }}>
                 Continue with Google
             </button>
         </form>
